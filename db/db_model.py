@@ -4,6 +4,10 @@ import sys
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 
+"""
+if there is any questions please see http://docs.sqlalchemy.org/en/latest/orm/tutorial.html
+"""
+
 # 单独执行时，把上级目录加入sys.path
 ROOT = os.path.dirname(os.path.abspath(__file__))
 fitPath = os.path.dirname(ROOT)

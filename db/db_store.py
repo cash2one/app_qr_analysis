@@ -57,3 +57,4 @@ if __name__ == '__main__':
     # commit self.session.commit()
     # sql self.session.execute(sql1, {'pic_id': id})
     # update self.session.merge(picContent)
+    # 事务: session.rollback() see also http://docs.sqlalchemy.org/en/rel_1_0/orm/session_transaction.html
