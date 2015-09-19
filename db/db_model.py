@@ -32,7 +32,22 @@ class test(Base):
     def __repr__(self):
         return "<test('%s')>" % (self.id)
 
+class Qr(Base):
+    __tablename__ = "app_qr_qr"
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    name = Column(String(45))
+
+class ScanHistory(Base):
+    __tablename__ = "app_qr_scanHistory"
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    qr_id = Column(Integer,ForeignKey('app_qr_qr.id'))
+    createtime = Column(DATETIME)
+    type = Column(Integer)
+    count = Column(Integer)
+
 Base.metadata.create_all(engine)
+
+
 
 
 

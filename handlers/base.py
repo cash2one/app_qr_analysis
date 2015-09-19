@@ -21,10 +21,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def active_menu(self, css):
         menu = {
-            'pic': "",
-            'Reports': "",
-            'Analytics': "",
-            'Export': ""
+            'QrManage': "",
+            'Statistics': "",
+
         }
         menu.update({css:'active'})
         return menu

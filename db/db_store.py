@@ -49,6 +49,27 @@ class datastore(object):
     #         print e
     #         return None
 
+
+    def queryScanDataWithBeginAndEnd(self,beginDate=None,endDate=None,osType=None,qrType=None):
+        if beginDate == None:
+            beginDate = datetime.datetime.min
+        if endDate == None:
+            endDate = datetime.datetime.max
+
+        if osType != "0" and qrType != "0":
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType and type = :osType"
+            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
+        elif osType != "0":
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
+            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
+        elif qrType != "0":
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType"
+            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
+        else:
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
+            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate})
+
+
 if __name__ == '__main__':
     pass
     # example for sqlalchemy

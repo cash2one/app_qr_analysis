@@ -1,6 +1,4 @@
-Mako==1.0.2
 MarkupSafe==0.23
-MySQL-python==1.2.5
 SQLAlchemy==1.0.8
 backports.ssl-match-hostname==3.4.0.2
 certifi==2015.9.6.2
