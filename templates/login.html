@@ -1,0 +1,28 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.html"/>
+<%block name="css">
+<link href="/static/css/login.css?v=1" rel="stylesheet"/>
+</%block>
+
+<%block name="content">
+    <div class="login-wrapper" style="">
+        <form class="form-signin" method="post" action="/login">
+            <h2 class="form-signin-heading">请登录</h2>
+            <label for="inputEmail" class="sr-only">用户名</label>
+            <input name="email" type="text" id="inputEmail" class="form-control" placeholder="用户名" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
+            <div class="checkbox">
+              <label>
+                <input name="remember" type="checkbox" value="1"/>记住
+              </label>
+            </div>
+            %if error:
+                <div class="alert alert-danger" role="alert">${error}</div>
+            %endif
+            <input name="_xsrf" value="${_xsrf}" type="hidden">
+            <input name="next" value="${next}" type="hidden">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        </form>
+    </div>
+</%block>

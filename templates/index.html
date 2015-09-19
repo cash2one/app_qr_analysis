@@ -1,0 +1,206 @@
+## -*- coding: utf-8 -*-
+<%inherit file="index_base.html"/>
+<%block name="content">
+    <div class="container-pic" style="">
+    <div style="margin-bottom: 20px">
+        <a href="/picmsg/add"  class="medium-button red-gradient" style="width: 100px;">添加图文</a>
+    </div>
+       %for msg in msgs:
+       <div class="pre-view pre-m" style="position: relative">
+        <div class="pre-view-content" style="width: 280px">
+            <div class="pre-title">
+                ${msg.title}
+            </div>
+            <div class="pre-pic">
+                <img  data-root="${msg.cover}" src="${msg.cover}"
+                     alt="预览图片">
+            </div>
+            <div class="pre-summary">
+                ${msg.summary}
+            </div>
+            <div class="operation" style="">
+                <div style="width: 48%;display: inline-block;line-height: 30px">
+                    <a href="/picmsg/edit/${msg.id}">编辑</a>
+                </div>
+                <div style="width: 48%;display: inline-block;line-height: 30px">
+                    <a href="javascript:void(0);" onclick="del('${msg.id}')">删除</a>
+                </div>
+            </div>
+            <div style="width: 100px;margin: 0 auto;">
+                %if msg.status == '0':
+                    <button onclick="promotion(this)" data-id="${msg.id}" data-is="y" class="btn btn-primary" style="width: 100px;">推</button>
+                %else:
+                    <button onclick="promotion(this)" data-id="${msg.id}" data-is="n" class="btn btn-primary" style="width: 100px;">取消推广</button>
+                %endif
+            </div>
+            <div style="margin-top: 5px">
+                <code>${msg.id}</code>
+            </div>
+            <div style="width: 60px;margin: 20px auto;">
+                <a href="/touch/s/${msg.id}">点此预览</a>
+            </div>
+            %if msg.status == '1':
+                <div class="promotion">发布中</div>
+            %endif
+        </div>
+    </div>
+    %endfor
+    <div class="clear"></div>
+</div>
+<div>
+    <nav style="">
+      <ul class="pagination">
+          %if pagination.has_prev:
+            <li>
+              <a href="/index?page=${pagination.page-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          %else:
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          %endif
+
+
+          %for page in pagination.iter_pages():
+            %if page:
+
+                 %if page != pagination.page:
+                    <li><a href="/index?page=${page}">${page}</a></li>
+                 %else:
+                    <li class="active"><a href="/index?page=${page}">${page}</a></li>
+                 %endif
+            %else:
+                <li><a href="javascript:void(0);">...</a></li>
+            %endif
+          %endfor
+
+          %if pagination.has_next:
+            <li>
+                <a href="/index?page=${pagination.page+1}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+          %else:
+            <li class="disabled">
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+          %endif
+
+      </ul>
+    </nav>
+</div>
+</%block>
+
+<%block name="css">
+    <style>
+    .operation{
+        height:30px;
+        text-align: center;
+        border: 1px solid #E7E7EB;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .promotion{
+        border-radius: 3px;
+        padding: 2px;
+        top:-8px;
+        right:-8px;
+        position: absolute;
+        background:#F01E1E;
+        color: white;
+    }
+    </style>
+
+</%block>
+
+<%block name="js">
+<script type="text/javascript">
+    function del(id){
+        if(confirm("确定删除此数据?")){
+            $.ajax({
+                type: "POST",
+                url: "/picmsg/delete",
+                data: "id="+id,
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                            alert("删除成功");
+                            window.location.reload();
+                        }else{
+                            alert(json.msg);
+                    }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+        }
+    }
+
+
+    function promotion(obj){
+        $this = $(obj);
+        var is = $this.data('is');
+        var id = $this.data('id');
+        if(is == 'y'){
+//            var p = $(".promotion");
+//            if(p.length > 0){
+//                alert("已有一条在推广, 请先取消");
+//                return false;
+//            }
+
+            $.ajax({
+                type: "POST",
+                url: "/picmsg/promotion",
+                data: "id="+id+"&type=y",
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                             $this.data('is','n');
+                             $this.html('取消推广');
+                             $this.parent().parent().append('<div class="promotion">发布中</div>');
+                        }else{
+                            alert(json.msg);
+                    }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+
+        }else{
+
+            $.ajax({
+                type: "POST",
+                url: "/picmsg/promotion",
+                data: "id="+id+"&type=n",
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                            $this.data('is','y');
+                            $this.html('推');
+                            $this.parent().parent().find('.promotion').remove();
+                        }else{
+                            alert(json.msg);
+                    }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+
+
+        }
+
+    }
+</script>
+</%block>
+
+

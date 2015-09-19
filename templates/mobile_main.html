@@ -1,0 +1,420 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-title" content="郁金香运动"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="${STATIC_URL}css/mobile.base.css?v=334" rel="stylesheet"/>
+    <link href="${STATIC_URL}css/layer.css?v=11233" rel="stylesheet"/>
+    <title>${picMsg.title}</title>
+    <style type="text/css">
+        .ui-loading {
+         -webkit-animation: rotate 1s steps(12) infinite;
+        }
+
+        .ui-loading {
+        width: 20px;
+        height: 20px;
+        background: url(http://i.gtimg.cn/vipstyle/frozenui/1.2.0/img/loading_sprite.png?_bid=306);
+        -webkit-background-size: auto 20px;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        left: 50%;
+        top: 45%;
+        }
+
+        @-webkit-keyframes rotate{from{background-position:0 0}to{background-position:-240px 0}}
+
+        .ui-btn:after, .ui-btn-lg:after, .ui-btn-s:after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+        }
+
+        .all-comment {
+            max-width: 640px;
+            width: 100%;
+            height: 44px;
+            background: #ffffff;
+            position: fixed;
+            bottom: 0;
+            transition: transform .3s linear;
+            -webkit-transition: -webkit-transform .3s linear;
+            -o-transition: -o-transform .3s linear;
+            -moz-transition: -moz-transform .3s linear;
+            z-index: 9999;
+
+        }
+
+        .all-comment-hide {
+            transform: translateY(100%);
+            -o-transform: translateY(100%);
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+        }
+
+        .all-comment-show {
+            transform: translateY(0);
+            -o-transform: translateY(0);
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+        }
+
+        .ui-form-item {
+            height: 44px;
+            font-size: 16px;
+            line-height: 44px;
+            vertical-align: middle;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .ui-border-t, .ui-border-b {
+            background-repeat: repeat-x;
+            -webkit-background-size: 100% 1px;
+        }
+
+        .ui-border-b {
+            background-position: left bottom;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, rgba(0, 0, 0, 0)), color-stop(0.5, #DEDFE0), to(#DEDFE0));
+        }
+
+        .ui-border-t, .ui-border-b, .ui-border-l, .ui-border-r, .ui-border-tb {
+            border: 0;
+        }
+
+        .ui-border-b {
+            border-bottom: 1px solid #DEDFE0;
+        }
+
+        .ui-form-item input:not([type=checkbox]), .ui-form-item textarea {
+            width: 70%;
+            /* padding-left: 95px; */
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        input, button, textarea, select {
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            border: 0;
+            background: 0 0;
+            -webkit-appearance: none;
+            outline: 0;
+        }
+
+        .ui-btn-s {
+            padding: 0;
+            width: 55px;
+            height: 25px;
+            line-height: 25px;
+        }
+
+        .ui-btn, .ui-btn-lg, .ui-btn-s, .ui-btn.disabled, .disabled.ui-btn-lg, .disabled.ui-btn-s, .ui-btn:disabled, .ui-btn-lg:disabled, .ui-btn-s:disabled {
+            border: 0;
+        }
+
+        .ui-btn, .ui-btn-lg, .ui-btn-s {
+            height: 30px;
+            line-height: 30px;
+            padding: 0 13px;
+            min-width: 60px;
+            display: inline-block;
+            position: relative;
+            text-align: center;
+            border: 0;
+            color: #0079FF;
+            font-size: 15px;
+            background-color: #FDFDFD;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #FFF), to(#FAFAFA));
+            border-radius: 3px;
+            color: #00A5E0;
+            -webkit-box-sizing: border-box;
+            border: 0
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+
+        .ui-btn:before, .ui-btn-lg:before, .ui-btn-s:before {
+            content: "";
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #CACCCD;
+            border-radius: 8px;
+            -webkit-transform: scale(0.5);
+            -webkit-transform-origin: 0 0;
+            padding: 1px;
+            -webkit-box-sizing: border-box;
+        }
+
+        .btn {
+            color: #FFF;
+            text-decoration: none;
+            background: #FC4C02;
+            width: 100%;
+            height: 40px;
+            border-radius: 4px;
+            display: block;
+            text-align: center;
+            line-height: 40px;
+            font-size: 14px;
+        }
+
+        .content ul{
+            list-style: disc;
+            margin-left: 40px;
+        }
+
+        .content ol{
+            list-style: decimal;
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div style="padding: 10px">
+        <input type="hidden" value="${picMsg.id}" id="msg_id">
+        <div>
+            <h3 class="title">${picMsg.title}</h3>
+            <div class="time">${picMsg.create_time} &nbsp;&nbsp;${picMsg.author}</div>
+        </div>
+        <div class="content">
+            <div class="banner">
+                <img src="${image_url}${picMsg.cover}">
+            </div>
+            ${picMsg.content}
+        </div>
+        <div class="comments" style="display: block;margin-bottom: 44px">
+
+        </div>
+
+
+    </div>
+
+    %if user_id:
+        <div class="footer" style="display: block;overflow: hidden">
+            <div class="up" id="do-like">
+                %if is_like:
+                <div id="like">
+                    <span class="like-count"></span>
+                    <span class="count-num" style="font-size: 20px;color: #888888">${picMsg.like_count}</span>
+                </div>
+                %else:
+                <div id="like">
+                    <span class="like-count-none"></span>
+                    <span class="count-num" style="font-size: 20px;color: #888888">${picMsg.like_count}</span>
+                </div>
+                %endif
+            </div>
+            <div class="up">
+                <div id="comment" class="comment-count" style="font-size: 20px;color: #888888">${comment_count}</div>
+            </div>
+        </div>
+        <div id="answer" class="all-comment all-comment-hide" style="">
+            <div class="ui-form-item ui-border-b">
+                <input id="content" type="text" placeholder="我也想说一句...">
+                <button class="ui-btn-s" id="commit">
+                    确定
+                </button>
+            </div>
+        </div>
+    %else:
+        <div class="download" style="padding: 10px;">
+            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.tulipsport.run" class="btn">下载郁金香APP,添加评论</a>
+        </div>
+    %endif
+</div>
+<input id="user_id" type="hidden" value="${user_id}"/>
+<input id="start" type="hidden" value="0"/>
+<input id="totalnum" type="hidden" value="0">
+<script type="text/javascript" src="${STATIC_URL}js/vendor/zepto.min.js"></script>
+<script type="text/javascript" src="${STATIC_URL}js/vendor/touch.js"></script>
+<script type="text/javascript" src="${STATIC_URL}js/vendor/layer.m.js"></script>
+<script>
+    (function(){
+        window.is_refresh = false;
+    })();
+    function getComments(num, start, msg_id, user_id){
+        $('<div class="ui-loading" style="display: block"></div>').appendTo($(".comments"));
+        $.ajax({
+                type: 'GET',
+                url: '/touch/comment',
+                data: {'msg_id': msg_id, 'user_id':user_id, 'num': num, 'start': start},
+                dataType: 'json',
+                success: function (data) {
+                    $('.ui-loading').remove();
+                    if (data.success) {
+                        is_refresh = true;
+                        var total = data.total;
+                        $("#totalnum").val(total);
+                        $("#start").val(parseInt(start)+num);
+                        comment_list = data.msg;
+                        comments = [];
+                        for(var i=0; i<comment_list.length; i++){
+                            var user_name = comment_list[i].user_name;
+                            var user_avatar = comment_list[i].user_avatar;
+                            var content = comment_list[i].content;
+                            var time = comment_list[i].time;
+                            html = '<div class="comment">';
+                            html += '<div class="header">';
+                            html += '<img src='+user_avatar+'>';
+                            html += '</div><div class="comment-info">';
+                            html += '<div class="nickname">'+user_name+'</div>';
+                            html += '<div class="comment-text">'+content+'</div>';
+                            html += '<div class="comment-time time">'+time+'</div></div></div>';
+                            comments.push(html);
+                        }
+                        $(".comments").append(comments.join(""));
+
+                        $(window).unbind('scroll');
+                        $(window).scroll(function(){
+                            var scrollTop = $(this).scrollTop();
+                            var scrollHeight = $(document).height();
+                            var windowHeight = $(this).height();
+                            if(scrollTop + windowHeight == scrollHeight){
+                                var start = $("#start").val();
+                                var totalnum = $("#totalnum").val();
+                                var id = $("#msg_id").val();
+                                var user_id = $("#user_id").val();
+                                if(parseInt(start) < parseInt(totalnum) && is_refresh){
+                                    getComments(10, start, id, user_id);
+                                    is_refresh = false;
+                                }
+                            }
+                        });
+                    } else {
+
+                    }
+
+                },
+                error: function (xhr, type) {
+                    $(".ui-loading").css('display', 'none');
+                }
+            });
+    }
+
+    Zepto(function ($) {
+
+
+        var id = $("#msg_id").val();
+        var user_id = $("#user_id").val();
+        getComments(10, 0, id, user_id);
+
+
+
+
+        $("#do-like").tap(function () {
+            var id = $("#msg_id").val();
+            if ($(this).hasClass("like-count-only"))
+                return false;
+            $.ajax({
+                type: 'POST',
+                url: '/touch/like',
+                data: {user_id: user_id, 'msg_id': id},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        $("#like").find(".count-num").html(parseInt($("#like").find(".count-num").html()) + 1);
+                        $("#like").find("span").eq(0).removeClass("like-count-none").addClass("like-count");
+                    } else {
+                        //alert(data.msg);
+//                         layer.open({
+//                            content: data.msg,
+//                            time:3
+//                        });
+                    }
+
+                },
+                error: function (xhr, type) {
+
+                }
+            });
+
+        });
+
+        $("#like-only").tap(function () {
+            var id = $("#msg_id").val();
+            if ($(this).hasClass("like-count-only"))
+                return false;
+            $.ajax({
+                type: 'POST',
+                url: '/touch/like',
+                data: {user_id: '38', 'msg_id': id},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        $("#like-only").html(parseInt($("#like-only").html()) + 1);
+                        $("#like-only").removeClass("like-count-only-none").addClass("like-count-only");
+                    } else {
+                        //alert(data.msg);
+//                        layer.open({
+//                            content: data.msg,
+//                            time:3
+//                        });
+                    }
+
+                },
+                error: function (xhr, type) {
+
+                }
+            });
+        });
+
+        $("#comment").tap(function () {
+            $(".all-comment").removeClass("all-comment-hide").addClass("all-comment-show");
+        });
+
+        $("#commit").tap(function(){
+            var content = $("#content").val();
+            if(content.length == 0){
+                alert("请输入内容");
+//                layer.open({
+//                    content: '请输入内容',
+//                    time:3
+//                });
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/touch/comment',
+                data: {'msg_id': id, 'user_id': user_id, 'content': content},
+                dataType: 'json',
+                success: function (data) {
+                    if(data.success){
+                         window.scrollTo(0,document.body.scrollHeight);
+                         $(".all-comment").removeClass("all-comment-show").addClass("all-comment-hide");
+                         html = '<div class="comment">';
+                         html += '<div class="header">';
+                         html += '<img src='+data.msg.user_avatar+'>';
+                         html += '</div><div class="comment-info">';
+                         html += '<div class="nickname">'+data.msg.user_name+'</div>';
+                         html += '<div class="comment-text">'+content+'</div>';
+                         html += '<div class="comment-time time">刚刚</div></div></div>';
+                         $(".comments").append(html);
+                         $("#content").val("");
+
+                    }
+                },
+                error: function(xhr, type) {
+
+                }
+            });
+        })
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-title" content="郁金香运动"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="${STATIC_URL}css/mobile.base.css?v=333" rel="stylesheet"/>
+    <title>郁金香运动</title>
+    <style type="text/css">
+        .ui-loading {
+         -webkit-animation: rotate 1s steps(12) infinite;
+        }
+
+        .ui-loading {
+        width: 20px;
+        height: 20px;
+        background: url(http://i.gtimg.cn/vipstyle/frozenui/1.2.0/img/loading_sprite.png?_bid=306);
+        -webkit-background-size: auto 20px;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        left: 50%;
+        top: 45%;
+        }
+
+        @-webkit-keyframes rotate{from{background-position:0 0}to{background-position:-240px 0}}
+
+        .ui-btn:after, .ui-btn-lg:after, .ui-btn-s:after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+        }
+
+        .all-comment {
+            max-width: 640px;
+            width: 100%;
+            height: 44px;
+            background: #ffffff;
+            position: fixed;
+            bottom: 0;
+            transition: transform .3s linear;
+            -webkit-transition: -webkit-transform .3s linear;
+            -o-transition: -o-transform .3s linear;
+            -moz-transition: -moz-transform .3s linear;
+            z-index: 9999;
+
+        }
+
+        .all-comment-hide {
+            transform: translateY(100%);
+            -o-transform: translateY(100%);
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+        }
+
+        .all-comment-show {
+            transform: translateY(0);
+            -o-transform: translateY(0);
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+        }
+
+        .ui-form-item {
+            height: 44px;
+            font-size: 16px;
+            line-height: 44px;
+            vertical-align: middle;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .ui-border-t, .ui-border-b {
+            background-repeat: repeat-x;
+            -webkit-background-size: 100% 1px;
+        }
+
+        .ui-border-b {
+            background-position: left bottom;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, rgba(0, 0, 0, 0)), color-stop(0.5, #DEDFE0), to(#DEDFE0));
+        }
+
+        .ui-border-t, .ui-border-b, .ui-border-l, .ui-border-r, .ui-border-tb {
+            border: 0;
+        }
+
+        .ui-border-b {
+            border-bottom: 1px solid #DEDFE0;
+        }
+
+        .ui-form-item input:not([type=checkbox]), .ui-form-item textarea {
+            width: 70%;
+            /* padding-left: 95px; */
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        input, button, textarea, select {
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            border: 0;
+            background: 0 0;
+            -webkit-appearance: none;
+            outline: 0;
+        }
+
+        .ui-btn-s {
+            padding: 0;
+            width: 55px;
+            height: 25px;
+            line-height: 25px;
+        }
+
+        .ui-btn, .ui-btn-lg, .ui-btn-s, .ui-btn.disabled, .disabled.ui-btn-lg, .disabled.ui-btn-s, .ui-btn:disabled, .ui-btn-lg:disabled, .ui-btn-s:disabled {
+            border: 0;
+        }
+
+        .ui-btn, .ui-btn-lg, .ui-btn-s {
+            height: 30px;
+            line-height: 30px;
+            padding: 0 13px;
+            min-width: 60px;
+            display: inline-block;
+            position: relative;
+            text-align: center;
+            border: 0;
+            color: #0079FF;
+            font-size: 15px;
+            background-color: #FDFDFD;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #FFF), to(#FAFAFA));
+            border-radius: 3px;
+            color: #00A5E0;
+            -webkit-box-sizing: border-box;
+            border: 0
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+
+        .ui-btn:before, .ui-btn-lg:before, .ui-btn-s:before {
+            content: "";
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #CACCCD;
+            border-radius: 8px;
+            -webkit-transform: scale(0.5);
+            -webkit-transform-origin: 0 0;
+            padding: 1px;
+            -webkit-box-sizing: border-box;
+        }
+
+        .btn {
+            color: #FFF;
+            text-decoration: none;
+            background: #FC4C02;
+            width: 100%;
+            height: 40px;
+            border-radius: 4px;
+            display: block;
+            text-align: center;
+            line-height: 40px;
+            font-size: 14px;
+        }
+
+        .main{
+            height: 100%;
+          background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
+          background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
+          background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
+          background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
+          background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
+        }
+
+        .notfind{
+            background: url('/static/images/404big.png');
+            /* background-size: cover; */
+            width: 180px;
+            height: 240px;
+            background-size: 150px;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper main">
+    <div class="notfind">
+    </div>
+    <button onclick="refresh()" class="btn" style="width: 80%;margin: 0 auto">刷新</button>
+</div>
+<script>
+    function refresh(){
+        window.location.reload();
+    }
+</script>
+</body>
+</html>

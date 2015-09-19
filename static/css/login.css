@@ -1,0 +1,15 @@
+body{
+    background-image: url("../images/bg.jpg");
+    background-attachment: fixed;
+    background-color: #777;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.login-wrapper{
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #FFFFFF;
+}
