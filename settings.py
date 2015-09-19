@@ -16,7 +16,7 @@ tornado.options.parse_command_line()
 MEDIA_ROOT = path(ROOT, 'static')
 TEMPLATE_ROOT = path(ROOT, 'templates')
 
-#db_settings
+# db_settings
 DATABASE_NAME = "app_qr"
 USER = "root"
 PASSWORD = ""
@@ -48,3 +48,4 @@ settings['cookie_secret'] = "your-cookie-secret"
 settings['xsrf_cookies'] = False
 settings['login_url'] = '/login'
 settings['template_loader'] = tornado.template.Loader(TEMPLATE_ROOT)
+
