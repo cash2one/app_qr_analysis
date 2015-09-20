@@ -48,6 +48,11 @@ class Qr(Base):
     __tablename__ = "app_qr_qr"
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String(45))
+    code = Column(String(50))
+    qr_code = Column(String(50))
+    create_time = Column(TIMESTAMP, default=datetime.now())
+    create_user = Column(Integer)
+    status = Column(Boolean)
 
 class ScanHistory(Base):
     __tablename__ = "app_qr_scanHistory"

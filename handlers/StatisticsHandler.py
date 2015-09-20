@@ -4,7 +4,7 @@
 import tornado.web
 from handlers.base import BaseHandler
 from datetime import datetime
-from util.strUtil import *
+from common.strUtil import *
 
 class StatisticsHandler(BaseHandler):
     @tornado.web.authenticated

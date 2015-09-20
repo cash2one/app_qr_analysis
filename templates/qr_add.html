@@ -1,0 +1,120 @@
+## -*- coding: utf-8 -*-
+<%inherit file="index_base.html"/>
+<%block name="content">
+<div style="width: 800px;margin: 0 auto;padding: 10px 80px;">
+      <div class="form-group">
+        <label for="channel-name">渠道名称</label>
+        <input type="text" class="form-control" id="channel-name" placeholder="请输入渠道名称">
+      </div>
+      <div class="form-group">
+          <label for="code">随机码</label>
+          <button type="button" class="btn btn-info btn-xs" id="generate-code">生成随机码</button>
+          <input disabled="disabled" type="text" class="form-control" id="code" placeholder=" ">
+      </div>
+
+    <div class="form-group">
+          <label for="qrcode">二维码</label>
+          <button type="button" class="btn btn-info btn-xs" id="generate-qr-code">生成二维码</button>
+          <input disabled="disabled" type="hidden" class="form-control" id="qrcode" placeholder=" ">
+          <div id="qr-img">
+          </div>
+      </div>
+      <button type="submit" class="btn btn-success">保存</button>
+</div>
+</%block>
+
+<%block name="css">
+
+</%block>
+
+<%block name="js">
+<script type="text/javascript">
+    $(function(){
+        $("#generate-code").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "/qr/generate/code",
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                            $("#code").val(json.msg);
+                        }else{
+                            alert(json.msg);
+                        }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+        });
+
+        $("#generate-qr-code").click(function(){
+            var code = $("#code").val();
+            if(code.length == 0){
+                alert("请先生成随机码");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/qr/generate/qrcode",
+                data: "code="+code,
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                            var img = "<img src='"+json.msg+"' >";
+                            $("#qr-img").html(img);
+                            $("#qrcode").val(json.msg);
+                        }else{
+                            alert(json.msg);
+                        }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+
+        });
+
+
+        $("button[type='submit']").click(function(){
+            var code = $("#code").val();
+            var qr_code = $("#qrcode").val();
+            var channel_name = $("#channel-name").val();
+            if(code.length == 0){
+                alert("请先生成随机码");
+                return false;
+            }
+
+            if(qr_code.length == 0){
+                alert("请先生成二维码");
+                return false;
+            }
+             if(channel_name.length == 0) {
+                 alert("请输入标题");
+                 return false;
+             }
+            $.ajax({
+                type: "POST",
+                url: "/qr/add",
+                data: "code="+code+"&qr_code="+qr_code+"&channel_name="+channel_name,
+                dataType: "json",
+                success: function(json){
+                    if(json.success){
+                            alert(json.msg);
+                        }else{
+                            alert(json.msg);
+                        }
+                },
+                error: function(json){
+                    alert(json.msg);
+                }
+            });
+
+
+        });
+
+    })
+</script>
+</%block>
+
+

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.db_model import User
 from settings import DATABASE_NAME, HOST, PASSWORD, USER
-from util.strUtil import md5
+from common.strUtil import md5
 
 __all__=['Singleton', 'DBOBJ']
 

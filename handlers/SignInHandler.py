@@ -3,7 +3,7 @@
 
 import tornado.web
 from handlers.base import BaseHandler
-from util.pagination import Pagination
+from common.pagination import Pagination
 
 
 class SignInHandler(BaseHandler):

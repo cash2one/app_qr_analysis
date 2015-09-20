@@ -71,7 +71,6 @@ class BaseHandler(tornado.web.RequestHandler):
             xsrf_form_html=self.xsrf_form_html,
             reverse_url=self.application.reverse_url,
             _xsrf = self.xsrf_token,
-
         )
         args.update(kwargs)
         html = t.render(**args)
@@ -79,8 +78,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_uuid(self):
         return str(uuid4()).replace("-","")
-
-
 
     def write_json(self, obj):
         self.set_header("Content-Type", "application/json; charset=UTF-8")
@@ -119,3 +116,23 @@ class BaseHandler(tornado.web.RequestHandler):
         arg = self.request.arguments[name]
         logger.debug("Found '%s': %s in JSON arguments" % (name, arg))
         return arg
+
+    def write_success(self, msg):
+        """
+        返回正确
+        :param msg:
+        :return:
+        """
+        self.set_header("Content-Type", "application/json; charset=UTF-8")
+        res={'success': True, 'msg': msg}
+        self.finish(simplejson.dumps(res))
+
+    def write_except(self, msg):
+        """
+        返回错误
+        :param msg:
+        :return:
+        """
+        self.set_header("Content-Type", "application/json; charset=UTF-8")
+        res={'success': False, 'msg': msg}
+        self.finish(simplejson.dumps(res))
