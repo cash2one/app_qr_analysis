@@ -1,0 +1,20 @@
+## -*- coding: utf-8 -*-
+<table class="table">
+   <caption>查询结果</caption>
+   <thead>
+      <tr>
+         % for title in titles:
+            <th>${title}</th>
+         % endfor
+      </tr>
+   </thead>
+   <tbody>
+   % for data in datas:
+    <tr class="active">
+        % for record in data:
+            <td>${record}</td>
+        % endfor
+    </tr>
+    % endfor
+   </tbody>
+</table>

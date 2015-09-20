@@ -45,6 +45,14 @@ class ScanHistory(Base):
     type = Column(Integer)
     count = Column(Integer)
 
+class Download(Base):
+    __tablename__ = "app_qr_download"
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    qr_id = Column(Integer,ForeignKey('app_qr_qr.id'))
+    createtime = Column(DATETIME)
+    type = Column(Integer)
+    count = Column(Integer)
+
 Base.metadata.create_all(engine)
 
 

@@ -17,6 +17,9 @@ def md5(str):
 def random_ascii_string(length):
     return ''.join([random.choice(UNICODE_ASCII_CHARACTERS) for x in xrange(length)])
 
+def datetime_toString(dt):
+    return dt.strftime("%Y-%m-%d")
+
 if __name__ == '__main__':
     print UNICODE_ASCII_CHARACTERS
     print string.ascii_letters.decode('ascii')
