@@ -3,7 +3,7 @@ import os
 import sys
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
-
+from datetime import datetime
 """
 if there is any questions please see http://docs.sqlalchemy.org/en/latest/orm/tutorial.html
 """
@@ -31,6 +31,18 @@ class test(Base):
 
     def __repr__(self):
         return "<test('%s')>" % (self.id)
+
+class User(Base):
+    __tablename__ = "user"
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    user_name = Column(String(50))
+    password = Column(String(50))
+    is_admin = Column(Boolean)
+    is_active = Column(Boolean)
+    last_login = Column(TIMESTAMP, default=datetime.utcnow())
+
+    def __repr__(self):
+        return "<User('{0}', '{1}')>".format(self.id, self.user_name)
 
 class Qr(Base):
     __tablename__ = "app_qr_qr"

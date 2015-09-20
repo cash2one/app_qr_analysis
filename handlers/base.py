@@ -36,16 +36,16 @@ class BaseHandler(tornado.web.RequestHandler):
     def set_current_user(self,user_email,user_id,remember):
         if user_id:
             if remember==1:
-                self.set_secure_cookie("tulip_user", str(user_id), expires_days=60)
+                self.set_secure_cookie("app_qr_code", str(user_id), expires_days=60)
             else:
-                self.set_secure_cookie("tulip_user", str(user_id), expires_days=2)
+                self.set_secure_cookie("app_qr_code", str(user_id), expires_days=2)
         else:
-            self.clear_cookie("tulip_user")
+            self.clear_cookie("app_qr_code")
 
     def get_current_user(self):
-        user_id = self.get_secure_cookie("tulip_user")
+        user_id = self.get_secure_cookie("app_qr_code")
         if user_id:
-            user = self.datastore.getUserById(user_id)
+            user = self.datastore.get_user_by_id(user_id)
             return user
         return None
 

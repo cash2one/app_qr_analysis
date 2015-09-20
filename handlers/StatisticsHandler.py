@@ -7,9 +7,8 @@ from datetime import datetime
 from util.strUtil import *
 
 class StatisticsHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
-        if self.current_user:
-            return self.redirect("/index")
         menu = self.active_menu("Statistics")
         return self.render("statistics.html", menu=menu)
 

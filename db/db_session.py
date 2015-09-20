@@ -1,7 +1,11 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from db.db_model import User
 from settings import DATABASE_NAME, HOST, PASSWORD, USER
+from util.strUtil import md5
+
+__all__=['Singleton', 'DBOBJ']
 
 
 class Singleton(object):
@@ -41,3 +45,19 @@ class DBOBJ(object):
         Dummy method, cause several IDEs can not handel singeltons in Python
         """
         pass
+
+def create_user(user_name, password, is_admin=1, is_active=1):
+        user = User()
+        user.user_name = user_name
+        password = md5(password)
+        user.password = password
+        user.is_admin = is_admin
+        user.is_active = is_active
+        return user
+
+
+if __name__ == "__main__":
+    session = DBOBJ.instance().session
+    user = create_user('admin', 'qr_code')
+    session.add(user)
+    session.commit()

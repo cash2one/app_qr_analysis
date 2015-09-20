@@ -19,35 +19,24 @@ class datastore(object):
             cls._instance = cls()
         return cls._instance
 
-    # def getUserById(self, id):
-    #     self.session.close()
-    #     try:
-    #         user = self.session.query(User).filter(User.id == id, User.is_active == 1).one()
-    #         if user is not None:
-    #             return user
-    #         return None
-    #     except Exception,e:
-    #         print 'exception in id',e
-    #         return None
-    #
-    # def saveUser(self, userObj):
-    #     self.session.close()
-    #     try:
-    #         self.session.add(userObj)
-    #         self.session.commit()
-    #     except Exception, e:
-    #         print e
-    #
-    #
-    # def checkUser(self, email, password):
-    #     self.session.close()
-    #     pwd = md5(password)
-    #     try:
-    #         user = self.session.query(User).filter(User.email==email, User.password==pwd).one()
-    #         return user
-    #     except Exception, e:
-    #         print e
-    #         return None
+    def get_user_by_id(self, id):
+        try:
+            user = self.session.query(User).filter(User.id == id, User.is_active == 1).one()
+            if user is not None:
+                return user
+            return None
+        except Exception,e:
+            print 'exception in id',e
+            return None
+
+    def check_user(self, user_name, password):
+        pwd = md5(password)
+        try:
+            user = self.session.query(User).filter(User.user_name==user_name, User.password==pwd).one()
+            return user
+        except Exception, e:
+            print e
+            return None
 
     def queryQrs(self):
         sql = "select name from app_qr_qr"
