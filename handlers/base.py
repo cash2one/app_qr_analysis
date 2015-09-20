@@ -53,7 +53,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def lookup(self):
         myLookup = TemplateLookup([os.path.join(str(os.path.dirname('./templates')), 'templates').replace('\\','/'),],
                 output_encoding='utf-8',
-                encoding_errors='replace')
+                input_encoding='utf-8',
+                encoding_errors='replace',
+                default_filters=['decode.utf_8'])
         return myLookup
 
     def render(self, template_name, **kwargs):
@@ -68,7 +70,8 @@ class BaseHandler(tornado.web.RequestHandler):
             static_url=self.static_url,
             xsrf_form_html=self.xsrf_form_html,
             reverse_url=self.application.reverse_url,
-            _xsrf = self.xsrf_token
+            _xsrf = self.xsrf_token,
+
         )
         args.update(kwargs)
         html = t.render(**args)
