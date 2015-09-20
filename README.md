@@ -5,6 +5,7 @@ to count the download count by qr code
 
 * 登录
 
+
 ## 二维码管理
 
 * 创建二维码
