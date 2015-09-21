@@ -4,6 +4,7 @@
 import tornado.web
 from handlers.base import BaseHandler
 from common.pagination import Pagination
+from settings import BASE_URL
 
 
 class SignInHandler(BaseHandler):
@@ -35,8 +36,15 @@ class LogoutHandler(BaseHandler):
 class IndexHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
+        page = int(self.get_argument("page", 1))
+        if page < 1:
+            page = 1
+        count = int(self.get_argument("count", 10))
+        total_count = self.datastore.get_qr_count()
+        qrs = self.datastore.get_qr(page, count)
         menu = self.active_menu("QrManage")
-        return self.render("index_demo.html", menu=menu)
+        pagination = Pagination(page, count, total_count)
+        return self.render("index_demo.html", menu=menu, pagination=pagination, qrs=qrs, base_url=BASE_URL)
 
 
 class RedictHandler(BaseHandler):

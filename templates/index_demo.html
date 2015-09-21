@@ -1,29 +1,89 @@
 ## -*- coding: utf-8 -*-
 <%inherit file="index_base.html"/>
 <%block name="content">
-fdsafsafs
+<div style="margin-bottom: 20px">
+    <a href="/qr/add" class="btn btn-info" style="">添加二维码</a>
+</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>渠道名称</th>
+        <th>随机码</th>
+        <th>对应链接</th>
+        <th>二维码</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    %for qr in qrs:
+        <tr>
+            <th scope="row">${loop.index + 1}</th>
+            <td>${qr.name}</td>
+            <td><span class="label label-primary">${qr.code}</span></td>
+            <td><code>${base_url}app/${qr.code}</code></td>
+            <td>
+                <div style="width: 60px;"><img style="width: 100%" src="/static/qrcode/${qr.qr_code}"></div>
+            </td>
+            <td>
+                <a href="#">删除</a>
+                <a href="#">统计详情</a>
+            </td>
+        </tr>
+    %endfor
+    </tbody>
+</table>
+
+<nav style="">
+      <ul class="pagination">
+          %if pagination.has_prev:
+            <li>
+              <a href="/index?page=${pagination.page-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          %else:
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          %endif
+
+
+          %for page in pagination.iter_pages():
+            %if page:
+
+                 %if page != pagination.page:
+                    <li><a href="/index?page=${page}">${page}</a></li>
+                 %else:
+                    <li class="active"><a href="/index?page=${page}">${page}</a></li>
+                 %endif
+            %else:
+                <li><a href="javascript:void(0);">...</a></li>
+            %endif
+          %endfor
+
+          %if pagination.has_next:
+            <li>
+                <a href="/index?page=${pagination.page+1}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+          %else:
+            <li class="disabled">
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+          %endif
+
+      </ul>
+</nav>
 </%block>
 
 <%block name="css">
-    <style>
-    .operation{
-        height:30px;
-        text-align: center;
-        border: 1px solid #E7E7EB;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    .promotion{
-        border-radius: 3px;
-        padding: 2px;
-        top:-8px;
-        right:-8px;
-        position: absolute;
-        background:#F01E1E;
-        color: white;
-    }
-    </style>
+<style></style>
 
 </%block>
 

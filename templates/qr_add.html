@@ -90,7 +90,7 @@
                 return false;
             }
              if(channel_name.length == 0) {
-                 alert("请输入标题");
+                 alert("请输入渠道名称");
                  return false;
              }
             $.ajax({
@@ -101,6 +101,7 @@
                 success: function(json){
                     if(json.success){
                             alert(json.msg);
+                            window.location.href = "/index";
                         }else{
                             alert(json.msg);
                         }

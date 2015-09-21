@@ -20,7 +20,6 @@ class datastore(object):
         return cls._instance
 
     def get_user_by_id(self, id):
-        self.session.close()
         try:
             user = self.session.query(User).filter(User.id == id, User.is_active == 1).one()
             if user is not None:
@@ -31,7 +30,6 @@ class datastore(object):
             return None
 
     def check_user(self, user_name, password):
-        self.session.close()
         pwd = md5(password)
         try:
             user = self.session.query(User).filter(User.user_name==user_name, User.password==pwd).one()
@@ -41,18 +39,27 @@ class datastore(object):
             return None
 
     def save_qr(self, code, qr_code, name, user):
-        self.session.close()
         try:
             qr = Qr()
             qr.code = code
             qr.qr_code = code+".png"
             qr.name = name
             qr.create_user = user.id
+            qr.status = 1
             self.session.add(qr)
             self.session.commit()
         except Exception,e:
             print e
             raise e
+
+    def get_qr_count(self):
+        return self.session.query(Qr).filter(Qr.status == 1).count()
+
+    def get_qr(self, page=1, count=10):
+        offset = (page-1) * count
+        return self.session.query(Qr).filter(Qr.status == 1).limit(count).offset(offset).all()
+
+
 
     def queryQrs(self):
         sql = "select name from app_qr_qr"
