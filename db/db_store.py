@@ -61,7 +61,27 @@ class datastore(object):
         offset = (page-1) * count
         return self.session.query(Qr).filter(Qr.status == 1).limit(count).offset(offset).all()
 
+    ### type 1:android 2:ios
+    ### qr foreign Qr
+    def save_ScanData(self, qr, createtime, type, count):
+        scanHistory = ScanHistory()
+        scanHistory.qr_id = qr
+        scanHistory.createtime = createtime
+        scanHistory.type = type
+        scanHistory.count = count
+        self.session.add(scanHistory)
+        self.session.commit
 
+    ### type 1:android 2:ios
+    ### qr foreign Qr
+    def save_Download(self, qr, createtime, type, count):
+        download = Download()
+        download.qr_id = qr
+        download.createtime = createtime
+        download.type = type
+        download.count = count
+        self.session.add(download)
+        self.session.commit
 
     def queryQrs(self):
         sql = "select name from app_qr_qr"
