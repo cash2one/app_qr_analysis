@@ -1,4 +1,5 @@
 # coding=utf-8
+from PIL import Image
 import pyqrcode
 from settings import BASE_URL, MEDIA_ROOT
 from custom_except import *
@@ -27,6 +28,27 @@ def qr_generator(code, scale=8):
     return web_path
 
 if __name__ == "__main__":
-    abc = qr_generator('fdafs321')
-    print abc
+
+    a = Image.open("youku.png")
+    b = Image.open("123.png")
+
+    img = b.convert("RGBA")
+    img_w, img_h = img.size
+    factor = 5
+    size_w = int(img_w / factor)
+    size_h = int(img_h / factor)
+
+    icon_w, icon_h = a.size
+    if icon_w > size_w:
+        icon_w = size_w
+    if icon_h > size_h:
+        icon_h = size_h
+
+    icon = a.resize((icon_w, icon_h), Image.ANTIALIAS)
+    w = int((img_w - icon_w) / 2)
+    h = int((img_h - icon_h) / 2)
+    icon = icon.convert("RGBA")
+    img.paste(icon, (w, h), icon)
+
+    img.save("heheeh.png")
 

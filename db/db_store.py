@@ -48,9 +48,11 @@ class datastore(object):
             qr.status = 1
             self.session.add(qr)
             self.session.commit()
-        except Exception,e:
-            print e
+        except Exception as e:
+            self.session.rollback()
             raise e
+        finally:
+            self.session.close()
 
     def get_qr_count(self):
         return self.session.query(Qr).filter(Qr.status == 1).count()
