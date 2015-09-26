@@ -3,6 +3,7 @@ import tornado.web
 from handlers.base import BaseHandler
 from common.strUtil import random_ascii_string
 from common.qrcode import *
+from settings import MEDIA_ROOT
 
 """
 module for qr_code request
@@ -50,5 +51,35 @@ class GenerateQrCodeHandler(BaseHandler):
         except Exception, e:
             return self.write_except(e.message)
 
+
+class AppIndexHandler(BaseHandler):
+    def get(self, qr_id):
+        #TODO 保存浏览记录
+        print qr_id
+        user_agent = self.request.headers.get('User-Agent')
+        if user_agent.find('MicroMessenger') > 0:
+            agent = "weixin"
+        elif user_agent.find('Android') > 0:
+            agent = "android"
+        elif user_agent.find('iPhone') > 0:
+            agent = "ios"
+        else:
+            agent = "web"
+        return self.render("mobile_main.html", agent=agent, qr_id=qr_id)
+
+class DownloadAppHandler(BaseHandler):
+    def get(self, qr_id):
+        print qr_id
+        #TODO 保存下载记录
+        file = MEDIA_ROOT+ "/apk/genshuixue.apk"
+        self.set_header ('Content-Type', 'application/vnd.android.package-archive')
+        self.set_header ('Content-Disposition', 'attachment; filename=genshuixue.apk')
+        with open(file, 'rb') as f:
+            while True:
+                data = f.read()
+                if not data:
+                    break
+                self.write(data)
+        self.finish()
 
 

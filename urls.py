@@ -11,6 +11,8 @@ url_patterns = [
     (r"/index", IndexHandler),
     (r"/statistics", StatisticsHandler),
 
+    (r"/app/(.*)", AppIndexHandler),
+    (r"/download/(.*)", DownloadAppHandler),
     (r"/qr/add", QrCodeAddHandler),
     (r"/qr/generate/code", GenerateCodeHandler),
     (r"/qr/generate/qrcode", GenerateQrCodeHandler),
