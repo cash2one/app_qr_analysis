@@ -17,7 +17,7 @@ MEDIA_ROOT = path(ROOT, 'static')
 TEMPLATE_ROOT = path(ROOT, 'templates')
 
 # base url
-BASE_URL = "http://127.0.0.1/"
+BASE_URL = "http://192.168.1.9:8888/"
 
 # db_settings
 DATABASE_NAME = "app_qr"

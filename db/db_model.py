@@ -57,16 +57,16 @@ class Qr(Base):
 class ScanHistory(Base):
     __tablename__ = "app_qr_scanHistory"
     id = Column(Integer, autoincrement=True, primary_key=True)
-    qr_id = Column(Integer,ForeignKey('app_qr_qr.id'))
-    createtime = Column(DATETIME)
+    qr_id = Column(Integer)
+    createtime = Column(DATETIME, default=datetime.now())
     type = Column(Integer)
     count = Column(Integer)
 
 class Download(Base):
     __tablename__ = "app_qr_download"
     id = Column(Integer, autoincrement=True, primary_key=True)
-    qr_id = Column(Integer,ForeignKey('app_qr_qr.id'))
-    createtime = Column(DATETIME)
+    qr_id = Column(Integer)
+    createtime = Column(DATETIME, default=datetime.now())
     type = Column(Integer)
     count = Column(Integer)
 

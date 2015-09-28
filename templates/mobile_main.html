@@ -132,7 +132,9 @@
         });
 
         $("#download").click(function(){
+
             var agent = $("#agent").val();
+
             if(agent == "weixin"){
                 $(".block").css("display", "block");
                 return false
@@ -142,7 +144,7 @@
                 window.location.href="https://itunes.apple.com/us/app/id399608199"
             }
 
-            if(agent == "ios"){
+            if(agent.match("android") != null){
                 var qr_id = $("#qr_id").val();
                 window.location.href="/download/"+qr_id;
             }

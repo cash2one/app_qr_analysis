@@ -29,6 +29,14 @@ class datastore(object):
             print 'exception in id',e
             return None
 
+    def get_qr_by_code(self, code):
+        try:
+            qr = self.session.query(Qr).filter(Qr.code == code).one()
+            return qr
+        except Exception, e:
+            print 'exception in id',e
+            return None
+
     def check_user(self, user_name, password):
         pwd = md5(password)
         try:
@@ -63,25 +71,37 @@ class datastore(object):
 
     ### type 1:android 2:ios
     ### qr foreign Qr
-    def save_ScanData(self, qr, createtime, type, count):
-        scanHistory = ScanHistory()
-        scanHistory.qr_id = qr
-        scanHistory.createtime = createtime
-        scanHistory.type = type
-        scanHistory.count = count
-        self.session.add(scanHistory)
-        self.session.commit
+    def save_ScanData(self, qr, createtime, sysType, count):
+        try:
+            scanHistory = ScanHistory()
+            scanHistory.qr_id = qr
+            scanHistory.createtime = createtime
+            scanHistory.type = sysType
+            scanHistory.count = count
+            self.session.add(scanHistory)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            raise e
+        finally:
+            self.session.close()
 
     ### type 1:android 2:ios
     ### qr foreign Qr
     def save_Download(self, qr, createtime, type, count):
-        download = Download()
-        download.qr_id = qr
-        download.createtime = createtime
-        download.type = type
-        download.count = count
-        self.session.add(download)
-        self.session.commit
+        try:
+            download = Download()
+            download.qr_id = qr
+            download.createtime = createtime
+            download.type = type
+            download.count = count
+            self.session.add(download)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            raise e
+        finally:
+            self.session.close()
 
     def queryQrs(self):
         sql = "select name from app_qr_qr"

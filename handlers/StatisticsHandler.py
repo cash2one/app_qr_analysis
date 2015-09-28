@@ -11,7 +11,8 @@ class StatisticsHandler(BaseHandler):
     def get(self):
         menu = self.active_menu("Statistics")
         return self.render("statistics.html", menu=menu)
-
+    
+    @tornado.web.authenticated
     def post(self):
         beginDate = self.get_argument("beginDate", None)
         endDate = self.get_argument("endDate", None)
