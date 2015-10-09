@@ -17,14 +17,17 @@ MEDIA_ROOT = path(ROOT, 'static')
 TEMPLATE_ROOT = path(ROOT, 'templates')
 
 # base url
-BASE_URL = "http://192.168.1.9:8888/"
+BASE_URL = "http://115.159.52.34/"
+
+## IP：115.159.52.34
+## sec：Z26vN4Qg3Ht9AEv
 
 # db_settings
 DATABASE_NAME = "app_qr"
 USER = "root"
-PASSWORD = ""
-HOST = "localhost"
-PORT = 3307
+PASSWORD = "Taiheyoudu6"
+HOST = "115.159.52.34"
+PORT = 3306
 
 # Deployment Configuration
 class DeploymentType:
