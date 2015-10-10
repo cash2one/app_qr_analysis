@@ -10,6 +10,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
 class datastore(object):
     def __init__(self):
         mydb = DBOBJ.instance()
@@ -105,24 +106,30 @@ class datastore(object):
         finally:
             self.session.close()
 
-    def queryQrs(self):
-        sql = "select name from app_qr_qr"
-        return self.session.execute(sql, {})
+    def queryQrs(self, qrType):
 
-    def queryScanDataWithBeginAndEnd(self,beginDate=None,endDate=None,osType=None,qrType=None):
+        if qrType == '0':
+            sql = "select name from app_qr_qr"
+            return self.session.execute(sql, {})
+        else:
+            sql = "select name from app_qr_qr where name = :qrType"
+            return self.session.execute(sql, {'qrType': qrType})
+
+
+    def queryScanDataWithBeginAndEnd(self, beginDate=None,endDate=None,osType=None,qrType=None):
         if beginDate == None:
             beginDate = datetime.datetime.min
         if endDate == None:
             endDate = datetime.datetime.max
 
         if osType != "0" and qrType != "0":
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType and type = :osType"
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
         elif osType != "0":
             sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
         elif qrType != "0":
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType"
+            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
         else:
             sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"

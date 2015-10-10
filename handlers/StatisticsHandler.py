@@ -7,29 +7,28 @@ from datetime import datetime
 from common.strUtil import *
 
 
-
 class StatisticsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         menu = self.active_menu("Statistics")
-        return self.render("statistics.html", menu=menu)
+        qrs = self.datastore.queryQrs('0')
+        return self.render("statistics.html", menu=menu, qrs=qrs)
     
     @tornado.web.authenticated
     def post(self):
         beginDate = self.get_argument("beginDate", None)
         endDate = self.get_argument("endDate", None)
-        osType = self.get_argument("osType", None)
+        osType = self.get_argument("osType", '0')
         qrType = self.get_argument("qrType", None)
 
-        beginDate = datetime.min
-        endDate = datetime.max
+        # beginDate = datetime.min
+        # endDate = datetime.max
 
         records = self.datastore.queryScanDataWithBeginAndEnd(beginDate, endDate, osType, qrType)
 
         results = {}
 
-        qrs = self.datastore.queryQrs()
-        temp_qrs = qrs
+        qrs = self.datastore.queryQrs(qrType)
 
         titles = []
         titles.append("时间")
@@ -48,7 +47,7 @@ class StatisticsHandler(BaseHandler):
             else:
                 temp = {}
                 temp["osType"] = type_
-                qrs = self.datastore.queryQrs()
+                qrs = self.datastore.queryQrs(qrType)
                 for qr in qrs:
                     temp_name = qr["name"].encode("utf-8")
                     temp[temp_name+"_安卓扫描量"] = 0
@@ -74,7 +73,7 @@ class StatisticsHandler(BaseHandler):
             else:
                 temp = {}
                 temp["osType"] = type_
-                qrs = self.datastore.queryQrs()
+                qrs = self.datastore.queryQrs(qrType)
                 for qr in qrs:
                     temp_name = qr["name"].encode("utf-8")
                     temp[temp_name+"_安卓下载量"] = 0
@@ -96,7 +95,7 @@ class StatisticsHandler(BaseHandler):
             data = []
             temp = results[item]
             data.append(item)
-            qrs = self.datastore.queryQrs()
+            qrs = self.datastore.queryQrs(qrType)
             for qr in qrs:
                 name = qr["name"].encode('utf-8')
                 data.append(temp[name+"_安卓扫描量"])

@@ -36,7 +36,7 @@ class DBOBJ(object):
     session = None
     def __init__(self):
         ConnectString = "mysql://%s:%s@%s/%s?charset=utf8" % (USER, PASSWORD, HOST, DATABASE_NAME)
-        self.engine = create_engine(ConnectString, pool_size=100, pool_recycle=3600, echo=False, max_overflow=15)
+        self.engine = create_engine(ConnectString, pool_size=100, pool_recycle=3600, echo=True, max_overflow=15)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
 
