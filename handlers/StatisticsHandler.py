@@ -38,6 +38,7 @@ class StatisticsHandler(BaseHandler):
             titles.append(qr["name"]+str("_苹果扫描量"))
 
         for record in records:
+            temp = {}
             createtime = datetime_toString(record["createtime"])
             name = record["name"].encode('utf-8')
             type_ = record["type"]

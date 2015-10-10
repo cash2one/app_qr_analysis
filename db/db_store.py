@@ -144,13 +144,13 @@ class datastore(object):
             endDate = datetime.datetime.max
 
         if osType != "0" and qrType != "0":
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType and type = :osType"
+            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
         elif osType != "0":
             sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
         elif qrType != "0":
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr_id = :qrType"
+            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
             return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
         else:
             sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
