@@ -6,7 +6,9 @@ import datetime
 from db_session import DBOBJ
 from db_model import *
 from common.strUtil import md5
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class datastore(object):
     def __init__(self):

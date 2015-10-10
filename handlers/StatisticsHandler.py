@@ -6,6 +6,8 @@ from handlers.base import BaseHandler
 from datetime import datetime
 from common.strUtil import *
 
+
+
 class StatisticsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -32,11 +34,9 @@ class StatisticsHandler(BaseHandler):
         titles = []
         titles.append("时间")
         for qr in qrs:
-            titles.append(qr["name"]+str("_AndroidScan"))
-            titles.append(qr["name"]+str("_AndroidDownload"))
-            titles.append(qr["name"]+str("_iOSScan"))
-            titles.append(qr["name"]+str("_iOSDownload"))
-
+            titles.append(qr["name"]+"_安卓扫描量")
+            titles.append(str(qr["name"])+str("_安卓下载量"))
+            titles.append(qr["name"]+str("_苹果扫描量"))
 
         for record in records:
             createtime = datetime_toString(record["createtime"])
@@ -51,15 +51,14 @@ class StatisticsHandler(BaseHandler):
                 qrs = self.datastore.queryQrs()
                 for qr in qrs:
                     temp_name = qr["name"].encode("utf-8")
-                    temp[temp_name+"_androidScan"] = 0
-                    temp[temp_name+"_iOSScan"] = 0
-                    temp[temp_name+"_androidDownload"] = 0
-                    temp[temp_name+"_iOSDownload"] = 0
+                    temp[temp_name+"_安卓扫描量"] = 0
+                    temp[temp_name+"_苹果扫描量"] = 0
+                    temp[temp_name+"_安卓下载量"] = 0
 
             if record["type"] == 1:
-                temp[name+"_androidScan"] = int(temp[name+"_androidScan"]) + 1
+                temp[name+"_安卓扫描量"] = int(temp[name+"_安卓扫描量"]) + 1
             else:
-                temp[name+"_iOSScan"] = int(temp[name+"_iOSScan"]) + 1
+                temp[name+"_苹果扫描量"] = int(temp[name+"_苹果扫描量"]) + 1
             temp["createtime"] = createtime
 
             results[createtime] = temp
@@ -78,15 +77,12 @@ class StatisticsHandler(BaseHandler):
                 qrs = self.datastore.queryQrs()
                 for qr in qrs:
                     temp_name = qr["name"].encode("utf-8")
-                    temp[temp_name+"_androidDownload"] = 0
-                    temp[temp_name+"_iOSDownload"] = 0
-                    temp[temp_name+"_androidScan"] = 0
-                    temp[temp_name+"_iOSScan"] = 0
+                    temp[temp_name+"_安卓下载量"] = 0
+                    temp[temp_name+"_安卓扫描量"] = 0
+                    temp[temp_name+"_苹果扫描量"] = 0
 
             if record["type"] == 1:
-                temp[name+"_androidDownload"] = int(temp[name+"_androidDownload"]) + 1
-            else:
-                temp[name+"_iOSDownload"] = int(temp[name+"_iOSDownload"]) + 1
+                temp[name+"_安卓下载量"] = int(temp[name+"_安卓下载量"]) + 1
             temp["createtime"] = createtime
 
             results[createtime] = temp
@@ -103,10 +99,9 @@ class StatisticsHandler(BaseHandler):
             qrs = self.datastore.queryQrs()
             for qr in qrs:
                 name = qr["name"].encode('utf-8')
-                data.append(temp[name+"_androidScan"])
-                data.append(temp[name+"_androidDownload"])
-                data.append(temp[name+"_iOSScan"])
-                data.append(temp[name+"_iOSDownload"])
+                data.append(temp[name+"_安卓扫描量"])
+                data.append(temp[name+"_安卓下载量"])
+                data.append(temp[name+"_苹果扫描量"])
 
             datas.append(data)
 

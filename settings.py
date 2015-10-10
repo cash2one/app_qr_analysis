@@ -19,8 +19,8 @@ TEMPLATE_ROOT = path(ROOT, 'templates')
 # base url
 BASE_URL = "http://115.159.52.34/"
 
-## IP：115.159.52.34
-## sec：Z26vN4Qg3Ht9AEv
+# IP: 115.159.52.34
+# sec: Z26vN4Qg3Ht9AEv
 
 # db_settings
 DATABASE_NAME = "app_qr"
