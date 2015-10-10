@@ -49,6 +49,7 @@ class Qr(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String(45))
     code = Column(String(50))
+    url = Column(String(50))
     qr_code = Column(String(50))
     create_time = Column(TIMESTAMP, default=datetime.now())
     create_user = Column(Integer)
