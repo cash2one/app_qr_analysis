@@ -6,6 +6,7 @@ import datetime
 from db_session import DBOBJ
 from db_model import *
 from common.strUtil import md5
+from settings import BASE_URL
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -57,6 +58,7 @@ class datastore(object):
             qr.name = name
             qr.create_user = user.id
             qr.status = 1
+            qr.url = BASE_URL+"app/"+code
             self.session.add(qr)
             self.session.commit()
         except Exception as e:
