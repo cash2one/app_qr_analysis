@@ -9,24 +9,26 @@
 <div class="">
 <div class="input-group col-xs-8">
   <span class="input-group-addon">开始时间</span>
-  <input type="text" class="form-control" id="beginDate" value="2012-05-15">
+  <input type="text" class="form-control" id="beginDate">
     <span class="input-group-addon">结束时间</span>
-  <input type="text" class="form-control" id="endDate" value="2016-05-15">
+  <input type="text" class="form-control" id="endDate">
 </div>
 
 <div class="input-group col-xs-8" style="margin-top: 20px">
   <span class="input-group-addon" >二维码类型</span>
   <select class="form-control" name="qrType" id="qrType">
       <option value="0">所有</option>
-      <option value="1">A</option>
-      <option value="2">B</option>
+      % for qr in qrs:
+        <option value="${qr[0]}">${qr[0]}</option>
+      % endfor
   </select>
 
-  <span class="input-group-addon">系统类型</span>
+  <!--<span class="input-group-addon">系统类型</span>
   <select class="form-control" name="osType" id="osType">
       <option value="0">所有</option>
       <option value="1">Android</option>
       <option value="2">iOS</option>
+      -->
   </select>
 </div>
 
