@@ -16,4 +16,6 @@ url_patterns = [
     (r"/qr/add", QrCodeAddHandler),
     (r"/qr/generate/code", GenerateCodeHandler),
     (r"/qr/generate/qrcode", GenerateQrCodeHandler),
+    # 统一匹配其他路径
+    (r".*", OthersHandler),
 ]

@@ -92,4 +92,19 @@ class DownloadAppHandler(BaseHandler):
                 self.write(data)
         self.finish()
 
+class OthersHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
+    def get(self, *args, **kwargs):
+        return self.write_error(404)
+
+    def write_error(self, status_code, **kwargs):
+        if status_code == 404:
+            self.render('404.html')
+        elif status_code == 500:
+            self.render('500.html')
+        else:
+            self.write('error:' + str(status_code))
+
 
