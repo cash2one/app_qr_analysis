@@ -97,7 +97,8 @@ class OthersHandler(tornado.web.RequestHandler):
         pass
 
     def get(self, *args, **kwargs):
-        return self.write_error(404)
+        # return self.write_error(404)
+        return self.redirect("/index")
 
     def write_error(self, status_code, **kwargs):
         if status_code == 404:
