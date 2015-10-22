@@ -22,8 +22,8 @@ BASE_URL = "http://115.159.52.34/"
 # db_settings
 DATABASE_NAME = "app_qr"
 USER = "root"
-PASSWORD = ""
-HOST = "localhost"
+PASSWORD = "Taiheyoudu6"
+HOST = "115.159.52.34"
 PORT = 3306
 
 # Deployment Configuration

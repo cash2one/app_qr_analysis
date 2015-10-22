@@ -30,16 +30,26 @@ class datastore(object):
                 return user
             return None
         except Exception,e:
+            self.session.rollback()
+
             print 'exception in id',e
             return None
+
+        finally:
+            self.session.close()
 
     def get_qr_by_code(self, code):
         try:
             qr = self.session.query(Qr).filter(Qr.code == code).one()
             return qr
         except Exception, e:
+            self.session.rollback()
+
             print 'exception in id',e
             return None
+
+        finally:
+            self.session.close()
 
     def check_user(self, user_name, password):
         pwd = md5(password)
@@ -47,8 +57,13 @@ class datastore(object):
             user = self.session.query(User).filter(User.user_name==user_name, User.password==pwd).one()
             return user
         except Exception, e:
-            print e
+            self.session.rollback()
+
+            print 'exception ',e
             return None
+
+        finally:
+            self.session.close()
 
     def save_qr(self, code, qr_code, name, user):
         try:
@@ -68,11 +83,31 @@ class datastore(object):
             self.session.close()
 
     def get_qr_count(self):
-        return self.session.query(Qr).filter(Qr.status == 1).count()
+        try:
+            return self.session.query(Qr).filter(Qr.status == 1).count()
+        except Exception, e:
+            self.session.rollback()
+
+            print 'exception ',e
+            return None
+
+        finally:
+            self.session.close()
+
 
     def get_qr(self, page=1, count=10):
-        offset = (page-1) * count
-        return self.session.query(Qr).filter(Qr.status == 1).limit(count).offset(offset).all()
+        try:
+            offset = (page-1) * count
+            return self.session.query(Qr).filter(Qr.status == 1).limit(count).offset(offset).all()
+
+        except Exception, e:
+            self.session.rollback()
+
+            print 'exception ', e
+            return None
+
+        finally:
+            self.session.close()
 
     ### type 1:android 2:ios
     ### qr foreign Qr
@@ -109,14 +144,18 @@ class datastore(object):
             self.session.close()
 
     def queryQrs(self, qrType):
+        try:
+            if qrType == '0':
+                sql = "select name from app_qr_qr"
+                return self.session.execute(sql, {})
+            else:
+                sql = "select name from app_qr_qr where name = :qrType"
+                return self.session.execute(sql, {'qrType': qrType})
+        except:
+            self.session.rollback()
 
-        if qrType == '0':
-            sql = "select name from app_qr_qr"
-            return self.session.execute(sql, {})
-        else:
-            sql = "select name from app_qr_qr where name = :qrType"
-            return self.session.execute(sql, {'qrType': qrType})
-
+        finally:
+            self.session.close()
 
     def queryScanDataWithBeginAndEnd(self, beginDate=None,endDate=None,osType=None,qrType=None):
         if beginDate == None:
@@ -124,18 +163,25 @@ class datastore(object):
         if endDate == None:
             endDate = datetime.datetime.max
 
-        if osType != "0" and qrType != "0":
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
-        elif osType != "0":
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
-        elif qrType != "0":
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
-        else:
-            sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate})
+        try:
+            if osType != "0" and qrType != "0":
+                sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
+            elif osType != "0":
+                sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
+            elif qrType != "0":
+                sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
+            else:
+                sql = "select sh.id,qr.name,sh.createtime,sh.type,sh.count from app_qr_scanHistory sh left join app_qr_qr qr on sh.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate})
+
+        except:
+            self.session.rollback()
+
+        finally:
+            self.session.close()
 
     def queryDownloadDataWithBeginAndEnd(self,beginDate=None,endDate=None,osType=None,qrType=None):
         if beginDate == None:
@@ -143,18 +189,27 @@ class datastore(object):
         if endDate == None:
             endDate = datetime.datetime.max
 
-        if osType != "0" and qrType != "0":
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
-        elif osType != "0":
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
-        elif qrType != "0":
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
-        else:
-            sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
-            return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate})
+
+        try:
+            if osType != "0" and qrType != "0":
+                sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType and type = :osType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType, 'qrType': qrType})
+            elif osType != "0":
+                sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and type = :osType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'osType': osType})
+            elif qrType != "0":
+                sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate and qr.name = :qrType"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate, 'qrType': qrType})
+            else:
+                sql = "select dl.id,qr.name,dl.createtime,dl.type,dl.count from app_qr_download dl left join app_qr_qr qr on dl.qr_id = qr.id where createtime >= :beginDate and createtime <= :endDate"
+                return self.session.execute(sql, {'beginDate': beginDate, 'endDate': endDate})
+
+
+        except:
+            self.session.rollback()
+
+        finally:
+            self.session.close()
 
 if __name__ == '__main__':
     pass
