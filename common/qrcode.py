@@ -24,7 +24,7 @@ def qr_generator(code, scale=8):
         os.mkdir(file_path)
     file_path = file_path + code + ".png"
     qrcode = pyqrcode.create(content, error="L")
-    qrcode.png(file_path, scale=10, quiet_zone=1)
+    qrcode.png(file_path, scale=8, quiet_zone=1)
     web_path = "/static/qrcode/" + code + ".png"
 
     qr_file = Image.open(file_path)
