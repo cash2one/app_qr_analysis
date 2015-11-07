@@ -30,13 +30,24 @@
         
         .logo{
             float: left;
-            width: 56%;
+            width: 50%;
+            margin-top: 20px;
         }
 
         .btn-download{
-            margin-left: 144px;
+            float: right;
+            margin-right: 24px;
+            margin-top: 35px;
+            width: 100px;
         }
 
+        .company-desc {
+            color: #999999;
+            float: left;
+            margin-left: 22%;
+            margin-top: -30px;
+            font-size: 10px;
+        }
         .download-btn{
             color: #fff;
             background-color: #FF9933;
@@ -87,6 +98,16 @@
             font-size: 22px;
             padding-top: 60%;
         }
+
+        .content_desc {
+            color: #aaaaaa;
+            font-size: 16px;
+            padding: 0 22px;
+        }
+        .content_desc p {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -104,32 +125,59 @@
         <input id="qr_id" value="${qr_id}" type="hidden">
         <div class="download-info">
             <div class="logo">
-                <img src="/static/images/d5.png" style="width: 100%;">
+                <img src="/static/images/logo.png" style="width: 100%;">
             </div>
             <div class="btn-download">
-                <div style="margin-top: 40px">
-                    <button id="download" class="download-btn">客户端下载</button>
-                </div>
+                <button id="download" class="download-btn">客户端下载</button>
             </div>
+
             <div style="clear: both"></div>
         </div>
+        <div class="company-desc">
+                19.7M | 北京百家互联科技有限公司
+            </div>
         <div class="app-pic" style="padding: 0px 22px;">
-            <img src="/static/images/d1.png" style="width: 100%">
+            <img src="/static/images/content.png" style="width: 100%">
+        </div>
+        <div class="content_desc">
+            <h3 style="font-size: 22px;margin-top: 20px">应用描述</h3>
+            <p>中小学补课?考大学?学英语?学日语?出国留学?学啥有啥!</p>
+            <p>学烘焙?学化妆?练瑜伽?还踢球?想学啥就找跟谁学</p>
+            <p>※数千万学生的互动学习第一选择，CCTV强力推荐</p>
+            <p>※中国最大的名师达人互动学习平台，像淘宝一样淘学</p>
+            <p>※与美女型男老师面对面，课程既好玩又实用</p>
+            <p>※优质实惠费用低至1元，不满意可随时申请退费</p>
 
+            <p>百万学生盛赞：评价真实有用，找到好老师So Easy</p>
+            <p>万千老师盛赞：平台高效实用，搞定教学真方便</p>
+
+            <p>跟谁学是中国最大的找好老师学习平台，涵盖各行业名师达人的教学服务及课程，采用顶尖的互联网技术提供电脑端和手机端的智能选课、选老师，拍照提问、真人及时解疑，一键搜寻附近好老师，让学习触手可及。</p>
+
+            <h3 style="font-size: 22px;margin-top: 20px">【跟谁学特色简介】</h3>
+            <p>主要特色：</p>
+            <p>1. 【找附近老师】轻触APP，一键找到971种品类课程，可按地图模式找附近最好的老师。轻松与20万老师咨询、约课、上课</p>
+            <p>2. 【真实用户评价】每一位老师均为平台实名认证，所有评价均为用户真实体验，轻松找到你中意的各类老师和课程</p>
+            <p>3. 【不满意随时退费】在跟谁学平台报名任意价格课程，不满意效果学费可随时退；课程上完后再通过平台支付，安全性十足</p>
+            <p>4. 【真人实时答疑】遇到难题拍照提问，真人老师及时解答！覆盖范围包括：中小学应试考试、大学考试、艺术体育兴趣辅导、出国留学及语言考试、职业资格证书及学历考试、生活兴趣技能等全品类课程</p>
+
+            <h3 style="font-size: 22px;margin-top: 20px">【跟谁学内容简介】</h3>
+            <p>1、艺术：乐器、声乐、舞蹈、绘画、书法、媒体艺术、书法、雕塑、戏剧、鉴赏，文艺青少年必修的气质科目。</p>
+            <p>2、体育：游泳、足球、篮球、羽毛球、网球、击剑、健身、棒球、武术、棋牌等，期待遇见下一个泳坛“都教授”。</p>
+            <p>3、生活、兴趣：魔术、魔方、烘焙、化妆、动漫、演讲、插花等，你就是下一个生活达人</p>
+            <p>4、出国留学：托福、雅思、GRE、GMAT、SAT、留学技巧、留学指导、出国旅行、移民，带你圆梦下一站</p>
+            <p>5、中小学：早教、幼儿园、小学、小学升初中，初中、中考、高中、高考、志愿填报、考前心理辅导，资深专业名师手把手教你学习方法，上理想学校</p>
+            <p>6、语言培训：英语、小语种、汉语言，无论大学四六级、职场英语、口语、新概念，还是日、韩、德、意、法等，全国最多的语言高手都在跟谁学教课</p>
+            <p>7、职业资格和学历：IT、财务金融、学历、管理培训、公务员、夏令营、孕婴辅导、国际游学，跟专家和过来人一起共同成长.</p>
+
+
+            <h3 style="font-size: 22px;margin-top: 20px">【联系方式】</h3>
+            <p>网站：www.genshuixue.com</p>
+            <p>电话：4000-910-910（周一到周日，8:00-23:00）</p>
+            <p>微信：跟谁学</p>
+            <p>邮箱：app@baijiahulian.com​</p>
+            <p>QQ群：4476558</p>
         </div>
-        <div>
-            <ul style="width: 80%;margin: 0 auto">
-                <li style="display: inline-block;width: 31%">
-                        <img src="/static/images/d2.png" style="width: 100%">
-                </li>
-                <li style="display: inline-block;width: 30%">
-                        <img src="/static/images/d3.png" style="width: 100%">
-                </li>
-                <li style="display: inline-block;width: 30%">
-                        <img src="/static/images/d4.png" style="width: 100%;">
-                </li>
-            </ul>
-        </div>
+
     </div>
 </div>
 <script type="text/javascript" src="/static/js/vendor/jquery-1.11.2.js"></script>

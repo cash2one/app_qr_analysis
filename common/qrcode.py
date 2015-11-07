@@ -19,7 +19,7 @@ def qr_generator(code, scale=8):
 
     content = BASE_URL + "app/" + code
     file_path = MEDIA_ROOT + "/qrcode/"
-    logo_path = MEDIA_ROOT + "/images/logo.png"
+    logo_path = MEDIA_ROOT + "/images/logo100.png"
     if not os.path.exists(file_path):
         os.mkdir(file_path)
     file_path = file_path + code + ".png"
